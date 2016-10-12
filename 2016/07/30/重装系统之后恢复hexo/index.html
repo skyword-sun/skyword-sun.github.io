@@ -258,6 +258,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/30/重装系统之后恢复hexo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/30/重装系统之后恢复hexo/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -279,9 +286,9 @@
       
         <p>最近重装系统之后想恢复hexo，一波三折，记录一下<br><a id="more"></a></p>
 <p>我的情况是：本地的hexo博客文档丢失了（简直心碎），自己重装了git,node.js和hexo，按照网上的初次安装的教程init了一次</p>
-<p>所以其实基本没啥要做的了，在hexo的config.yml下deploy标签处修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: https://github.com/skyword-sun/skyword-sun.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
-<p>然后在git bash上试一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo d</div><div class="line">ERROR Deployer not found: git</div></pre></td></tr></table></figure></p>
-<p>这里我的原因是忘记装一个扩展了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
+<p>所以其实基本没啥要做的了，在hexo的config.yml下deploy标签处修改<br><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">deploy</span>:</div><div class="line">  <span class="attribute">type</span>: git</div><div class="line">  <span class="attribute">repo</span>: <span class="attribute">https</span>:<span class="comment">//github.com/skyword-sun/skyword-sun.github.io.git</span></div><div class="line">  <span class="attribute">branch</span>: master</div></pre></td></tr></table></figure></p>
+<p>然后在git bash上试一下<br><figure class="highlight subunit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo d</div><div class="line"><span class="keyword">ERROR </span>Deployer not found: git</div></pre></td></tr></table></figure></p>
+<p>这里我的原因是忘记装一个扩展了<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm <span class="keyword">install</span> hexo-deployer-git <span class="comment">--save</span></div></pre></td></tr></table></figure></p>
 <p>然后就再次hexo d<br>会弹出窗口让你输入实现指定的repo的用户名和密码，认证成功即可<br>这样就恢复了你本地新装的hexo和云端git博客的同步</p>
 <p>但是对我来说的一个坑就是原来的本地post文件夹下的博客markdown文档都丢了，hexo在deploy的时候，git云端似乎只生成并保留html文件。。</p>
 <p>所以现在我没有原来的文档了只有每篇博客的html代码。。</p>
@@ -356,6 +363,10 @@
 
           
   <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/30/重装系统之后恢复hexo/"
+           data-title="重装系统之后恢复hexo" data-url="http://yoursite.com/2016/07/30/重装系统之后恢复hexo/">
+      </div>
     
   </div>
 
@@ -559,9 +570,30 @@
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"skywordsun"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
   
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
 
 
 

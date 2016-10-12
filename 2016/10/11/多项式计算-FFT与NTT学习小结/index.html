@@ -1,0 +1,612 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数学," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="看了两天FFT一直没有学fft，直到10天前打beijing online contest时，碰到了一个NTT的裸题，发现必须要看看了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多项式计算-FFT与NTT学习小结">
+<meta property="og:url" content="http://yoursite.com/2016/10/11/多项式计算-FFT与NTT学习小结/index.html">
+<meta property="og:site_name" content="Skyword's Blog">
+<meta property="og:description" content="看了两天FFT一直没有学fft，直到10天前打beijing online contest时，碰到了一个NTT的裸题，发现必须要看看了">
+<meta property="og:updated_time" content="2016-10-12T06:18:27.084Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多项式计算-FFT与NTT学习小结">
+<meta name="twitter:description" content="看了两天FFT一直没有学fft，直到10天前打beijing online contest时，碰到了一个NTT的裸题，发现必须要看看了">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/11/多项式计算-FFT与NTT学习小结/"/>
+
+
+  <title> 多项式计算-FFT与NTT学习小结 | Skyword's Blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Skyword's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                多项式计算-FFT与NTT学习小结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-11T21:53:41+08:00" content="2016-10-11">
+              2016-10-11
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>看了两天FFT<br>一直没有学fft，直到10天前打beijing online contest时，碰到了一个NTT的裸题，发现必须要看看了<br><a id="more"></a><br>hexo博客配置有一些问题，mathjax公式一直不能正常加载，可以访问我在cmdmarkdown上发布的版本 <a href="https://www.zybuluo.com/skyword/note/521179" target="_blank" rel="external">here</a><br>这几天看了一些博客，发现它纯粹在数学上需要功底。FFT,NTT的题目中，简单的那部分基本可以分为两个方面：建模列出表达式+套版<br>理解模板中那些纯粹属于FFT,NTT的做法并不难。难的是怎么用到题目中，这需要数学功底。。</p>
+<p>我就不在这里从头写了，网上已经有了很好的博客来讲解FFT<br>首先，我决定尝试叙述一下逻辑关系：<br>我们现在要解决的，是高效的计算多项式乘法，传统朴素的方法是 O(n^2) 的。<br>而FFT，即快速傅里叶变换，通过某种技巧，使复杂度降到 O(nlogn) , 但是FFT的弱点在于，它的计算在复数域内进行，因此存在精度问题。<br>于是有了NTT，即快速数论变换。这一变换是对FFT的改进，使得所有计算在(Z_p)，即模p剩余系下考虑。因此，整数意义下的FFT问题可以用NTT来解决，从而避免精度误差。</p>
+<ol>
+<li><p>FFT</p>
+<p>贴出一些文章：</p>
+</li>
+</ol>
+<ul>
+<li><p><a href="http://blog.miskcoo.com/2015/04/polynomial-multiplication-and-fast-fourier-transform#i-15" target="_blank" rel="external">从多项式乘法到快速傅里叶变换</a></p>
+</li>
+<li><p><a href="https://www.zybuluo.com/397915842/note/37965" target="_blank" rel="external">快速傅里叶变换（易懂版）</a></p>
+</li>
+</ul>
+<p>这两篇文章说的很清楚。傅里叶变换建立在一些基础的处理手法和引理上。<br>首先是多项式的点值表达，很好理解，一个n次一元多项式，与n个不同的点是相互确定的。这个可以从代数的角度上来理解。文章的推导也阐明了这点。<br>点值表达给我们带来的是，我们想要表述一个多项式，只需任取n个不同的点，就能唯一地表述它。我们想要求一个多项式，只要设法找到n个不同的该多项式经过的点，就可以求出其系数表达。<br>因此，我们接下来的工作就放在点值上来考虑。经验表明，只有真正想清楚了点值表达是什么以及它对下面的工作起到什么作用，才能更好地理解下面的推导。</p>
+<p>教程里已经推导了，单纯的去取n个点，来作点值表达，是可以完成多项式相乘计算的。然而，普遍的时间复杂度还是O(n^2) 的。</p>
+<p>到这时候，FFT才真正登场。<br>FFT的做法是，同样基于点值表达，但是选了一组很巧妙的点，即n 重单位复根<br>[ \omega_k = e^\frac{2k\pi}{n} , k = 0,1,2 … n-1 ]<br>这组点的点值之间存在着巧妙的关系，使得我们可以用分治的思路来求解所有点值，复杂度降到O(nlogn)<br>思想就是这些，剩下的就是引理，DFT&amp;IDFT，Rader等等具体的一些东西了，上面的文章讲得很清楚了</p>
+<ol>
+<li>NTT<br><a href="http://blog.csdn.net/acdreamers/article/details/39026505" target="_blank" rel="external">多项式计算终极版（ACdreamer）</a><br>关于gn的取法和原根的理解，这一篇说的比较好：<br><a href="https://riteme.github.io/blog/2016-8-22/ntt.html" target="_blank" rel="external">原根与NTT</a><br>正如刚才所说，FFT存在精度上的误差，有时候直接影响答案的正确输出。因此，针对整数意义上的问题，我们有NTT<br>NTT是一个改进，我们选取一组新的点值<br>[\omega_n=g^\frac{p-1}{n}]<br>其中p为质数，n是2的方幂，且满足 n | (p-1)</li>
+</ol>
+<p>上面的文章证明了，wn具有同n重单位复根一样的那几条性质，因此可以代替n重单位复根来做计算。</p>
+<p>所以要写NTT，只需要改动取wn 的部分即可。<br>我们需要的常数是大质数p，和它的原根g，p一般是取费马素数的形式，即：<br>[p = c<em>2^k+1 \quad c,k∈N_{+}]<br>常用的是p = 479</em>2^21+1 , 对应原根 g = 3<br>p并不总是随便取的，有时候题目要求你取某个指定的模数p,如果模数p是费马素数，那么不用做任何改动，求出其原根，对应的做一些更改就好。<br>原根的求法和更多的一些知识：<a href="http://blog.csdn.net/zhang20072844/article/details/11541133" target="_blank" rel="external">这里</a><br>（这个我还没仔细看。。目前做的题还很少。。）<br>如果是任意的质数，听说的做法是找两个小的费马素数来分别算，然后再用crt来合并，好吧我还没做这类题。。</p>
+<p>目前想得到的一些自己对FFT,NTT的理解就是这样了，代码中有些细节的地方还需要我仔细琢磨，并没有搞得很透彻。</p>
+<p>几道题目：<br>FFT入门题：<br><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1402" target="_blank" rel="external">hdu1402</a><br>大数乘法，n位的大整数，实际上可以看成n次的多项式。两个大数的相乘，就可以理解成这两个多项式的乘法。在用FFT计算好乘法之外，我们额外做的就是进位和顺序调整了。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div></pre></td><td class="code"><pre><div class="line">#include &lt;cstdio&gt;</div><div class="line">#include &lt;cstring&gt;</div><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;algorithm&gt;</div><div class="line">#include &lt;cmath&gt;</div><div class="line">#include &lt;vector&gt;</div><div class="line">#include &lt;utility&gt;</div><div class="line">#include &lt;string&gt;</div><div class="line">#include &lt;queue&gt;</div><div class="line">//#define maxn 1024</div><div class="line">#define LL long long</div><div class="line">#define fp freopen("in.txt","r",stdin)</div><div class="line">#define fpo freopen("out9.txt","w",stdout)</div><div class="line">//#define judge</div><div class="line">using namespace std;</div><div class="line">const double eps = 1e-10;</div><div class="line">const double pi = acos(-1.0);</div><div class="line">const int maxn = 250050;</div><div class="line">const int INF = 0x3f3f3f3f;</div><div class="line">const double lg2 = log(2.0);</div><div class="line">const LL MOD = 1e9+7;</div><div class="line">#define MAX 5050</div><div class="line"></div><div class="line">struct Complex</div><div class="line">&#123;</div><div class="line">    double re,im;</div><div class="line">    Complex(double re = 0.0, double im = 0.0)</div><div class="line">    &#123;</div><div class="line">        this-&gt;re = re;</div><div class="line">        this-&gt;im = im;</div><div class="line">    &#125;</div><div class="line">    Complex operator -(const Complex &amp;elem) const</div><div class="line">    &#123;</div><div class="line">        return Complex(this-&gt;re - elem.re, this-&gt;im - elem.im);</div><div class="line">    &#125;</div><div class="line">    Complex operator +(const Complex &amp;elem) const</div><div class="line">    &#123;</div><div class="line">        return Complex(this-&gt;re + elem.re, this-&gt;im + elem.im);</div><div class="line">    &#125;</div><div class="line">    Complex operator *(const Complex &amp;elem) const</div><div class="line">    &#123;</div><div class="line">        return Complex(this-&gt;re * elem.re - this-&gt;im * elem.im, this-&gt;im*elem.re + this-&gt;re*elem.im);</div><div class="line">    &#125;</div><div class="line">    void val(double re = 0.0, double im = 0.0)</div><div class="line">    &#123;</div><div class="line">        this-&gt;re = re;</div><div class="line">        this-&gt;im = im;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Complex A[maxn],B[maxn];</div><div class="line">int res[maxn],len,multilen,len1,len2;</div><div class="line">char s1[maxn],s2[maxn];</div><div class="line"></div><div class="line">void swap(Complex &amp;a, Complex &amp;b)</div><div class="line">&#123;</div><div class="line">    Complex tmp = a;</div><div class="line">    a = b, b=tmp;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void init()</div><div class="line">&#123;</div><div class="line">    len1 = strlen(s1),len2 = strlen(s2);</div><div class="line">    multilen = max(len1,len2);</div><div class="line">    len = 1;</div><div class="line"></div><div class="line">    while(len&lt;(multilen&lt;&lt;1)) len&lt;&lt;=1;</div><div class="line"></div><div class="line">    for(int i = 0; i &lt;len1; i++)</div><div class="line">        A[i].val(s1[len1-i-1]-'0',0);</div><div class="line">    for(int i = 0; i &lt; len2; i++)</div><div class="line">        B[i].val(s2[len2-i-1]-'0',0);</div><div class="line">    for(int i = len1; i &lt; len; i++)A[i].val();</div><div class="line">    for(int i = len2; i &lt; len; i++)B[i].val();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">void rader(Complex y[])</div><div class="line">&#123;</div><div class="line">    for(int i = 1,j=len&gt;&gt;1,k; i &lt; len-1; i++)</div><div class="line">    &#123;</div><div class="line">        if(i&lt;j) swap(y[i],y[j]);</div><div class="line">        k = len&gt;&gt;1;</div><div class="line">        while(j &gt;= k)</div><div class="line">        &#123;</div><div class="line">            j-=k;</div><div class="line">            k&gt;&gt;=1;</div><div class="line">        &#125;</div><div class="line">        if(j&lt;k)j+=k;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//op==1 DFT</div><div class="line">//op==-1 IDFT</div><div class="line">void FFT(Complex y[], int op)</div><div class="line">&#123;</div><div class="line">    rader(y);</div><div class="line"></div><div class="line">    for(int h = 2; h &lt;=len; h&lt;&lt;=1)</div><div class="line">    &#123;</div><div class="line">        Complex wn(cos(op*2*pi/h),sin(op*2*pi/h));</div><div class="line"></div><div class="line">        for(int i = 0; i &lt; len; i +=h)</div><div class="line">        &#123;</div><div class="line">            Complex w(1,0);</div><div class="line">            for(int j = i; j &lt; i+h/2; j++)</div><div class="line">            &#123;</div><div class="line">                Complex u = y[j];</div><div class="line">                Complex t = w * y[j + h/2];</div><div class="line">                y[j] = u + t;</div><div class="line">                y[j+h/2] = u - t;</div><div class="line">                w = w * wn;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if(op==-1)// for IDFT</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        for(int i = 0; i &lt; len ; i++)</div><div class="line">        &#123;</div><div class="line">            y[i].re/=len;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void convolution(Complex * A, Complex * B)</div><div class="line">&#123;</div><div class="line">    FFT(A,1),FFT(B,1);</div><div class="line"></div><div class="line">    for(int i = 0; i &lt;len; i++)</div><div class="line">    &#123;</div><div class="line">        A[i] = A[i] * B[i];</div><div class="line">    &#125;</div><div class="line">    FFT(A,-1);</div><div class="line"></div><div class="line">    for(int i = 0 ; i &lt; len; i++)</div><div class="line">        res[i] = (int)(A[i].re +0.5);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void adjust(int * arr)</div><div class="line">&#123;</div><div class="line">    for(int i = 0; i &lt; len ; i++)</div><div class="line">    &#123;</div><div class="line">        res[i+1]+=res[i]/10;</div><div class="line">        res[i]%=10;</div><div class="line">    &#125;</div><div class="line">    while(--len &amp;&amp; res[len]==0);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void print(int * arr)</div><div class="line">&#123;</div><div class="line">    for(int i = len; i&gt;=0;i--)</div><div class="line">    &#123;</div><div class="line">        printf("%c",arr[i]+'0');</div><div class="line">    &#125;</div><div class="line">    printf("\n");</div><div class="line">&#125;</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">    while(gets(s1)&amp;&amp;gets(s2))</div><div class="line">    &#123;</div><div class="line">        init();</div><div class="line">        convolution(A,B);</div><div class="line">        adjust(res);</div><div class="line">        print(res);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>51nod上有一道同样的题目，好像规模更大，我用fft和ntt做了两次，有趣的是NTT跑的比FFT快了不少。</p>
+<p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=4609" target="_blank" rel="external">hdu4609</a><br>n条线段，有各自的长度，任取三条，求能组成三角形的组合数目。<br>这个题就不那么裸了，用到FFT的地方是，用num[]数组来存任意取两条线段能组成长度为i的方案数，基于两边之和大于第三边的原则，枚举三角形中的最长边来计数。然后去掉几类重复的情况，个人觉得这是更考察功底的地方。。<a href="http://www.cnblogs.com/kuangbin/archive/2013/07/24/3210565.html" target="_blank" rel="external">kuangbin的题解</a><br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div></pre></td><td class="code"><pre><div class="line">/*************************************************************************</div><div class="line">    &gt; File Name: hdu4609.cpp</div><div class="line">    &gt; Author: skyword</div><div class="line">    &gt; Mail: skywordsun@gmail.com</div><div class="line">    &gt; Created Time: 2016年10月02日 星期日 11时11分32秒</div><div class="line"> ************************************************************************/</div><div class="line"></div><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;cstdio&gt;</div><div class="line">#include &lt;cstring&gt;</div><div class="line">#include &lt;cmath&gt;</div><div class="line">#include &lt;vector&gt;</div><div class="line">#include &lt;set&gt;</div><div class="line">#include &lt;algorithm&gt;</div><div class="line">#include &lt;queue&gt;</div><div class="line">using namespace std;</div><div class="line">const double pi = acos(-1.0);</div><div class="line">#define maxn 400050</div><div class="line">#define ll long long</div><div class="line">#define fp freopen("in.txt","r",stdin);</div><div class="line">struct Complex</div><div class="line">&#123;</div><div class="line">    double re,im;</div><div class="line">    Complex(double re=0.0, double im = 0.0)</div><div class="line">    &#123;</div><div class="line">        this-&gt;re = re; this-&gt;im = im;</div><div class="line">    &#125;</div><div class="line">    Complex operator +(const Complex &amp;b)</div><div class="line">    &#123;</div><div class="line">        return Complex(this-&gt;re + b.re, this-&gt;im + b.im);</div><div class="line">    &#125;</div><div class="line">    Complex operator -(const Complex &amp;b)</div><div class="line">    &#123;</div><div class="line">        return Complex(this-&gt;re - b.re , this-&gt;im - b.im);</div><div class="line">    &#125;</div><div class="line">    Complex operator *(const Complex &amp;b)</div><div class="line">    &#123;</div><div class="line">        return Complex(this-&gt;re*b.re - this-&gt;im*b.im , this-&gt;re*b.im + this-&gt;im*b.re);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">void rader(Complex y[],int len)</div><div class="line">&#123;</div><div class="line">    int i,j,k;</div><div class="line">    for(i = 1,j=len/2; i&lt;len-1;i++)</div><div class="line">    &#123;</div><div class="line">        if(i&lt;j) swap(y[i],y[j]);</div><div class="line">        k = len/2;</div><div class="line">        while(j &gt;= k)</div><div class="line">        &#123;</div><div class="line">            j-=k;</div><div class="line">            k/=2;</div><div class="line">        &#125;</div><div class="line">        if(j&lt;k) j += k;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void fft(Complex y[], int len , int op)</div><div class="line">&#123;</div><div class="line">    rader(y,len);</div><div class="line">    for(int h = 2; h &lt;= len; h&lt;&lt;=1)</div><div class="line">    &#123;</div><div class="line">        Complex wn(cos(-op*2*pi/h),sin(-op*2*pi/h));</div><div class="line">        for(int j = 0; j &lt; len; j+=h)</div><div class="line">        &#123;</div><div class="line">            Complex w(1,0);</div><div class="line">            for(int k = j; k &lt; j+h/2; k++)</div><div class="line">            &#123;</div><div class="line">                Complex u = y[k];</div><div class="line">                Complex t = w*y[k+h/2];</div><div class="line">                y[k] = u+t;</div><div class="line">                y[k+h/2] = u-t;//butterfly op</div><div class="line">                w = w* wn;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    if(op == -1)</div><div class="line">    &#123;</div><div class="line">        for(int i =0;i&lt;len;i++)</div><div class="line">        &#123;</div><div class="line">            y[i].re /= len;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Complex x[maxn];</div><div class="line">int a[maxn];</div><div class="line">ll num[maxn],sum[maxn];</div><div class="line">int t,n;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line"></div><div class="line">    scanf("%d",&amp;t);</div><div class="line">    while(t--)</div><div class="line">    &#123;</div><div class="line">        scanf("%d",&amp;n);</div><div class="line">        memset(num,0,sizeof(num));</div><div class="line">        for(int i = 0; i&lt;n;i++)</div><div class="line">        &#123;</div><div class="line">            scanf("%d",&amp;a[i]);</div><div class="line">            num[a[i]]++;</div><div class="line">        &#125;</div><div class="line">        sort(a,a+n);</div><div class="line">        int len1 = a[n-1]+1;</div><div class="line">        int len = 1; // multilength</div><div class="line">        while(len &lt; 2*len1) len &lt;&lt;= 1;</div><div class="line">        //init</div><div class="line">        for(int i = 0; i&lt;len1 ; i++) x[i] = Complex(num[i],0);</div><div class="line">        for(int i = len1; i&lt;len; i++) x[i] = Complex(0,0);</div><div class="line">        fft(x,len,1);</div><div class="line">        for(int i= 0; i&lt;len;i++) x[i] = x[i] * x[i];</div><div class="line">        fft(x,len,-1);</div><div class="line">        for(int i = 0; i &lt; len; i++)</div><div class="line">        &#123;</div><div class="line">            num[i] = (ll)(x[i].re + 0.5);</div><div class="line">        &#125;</div><div class="line">        len = 2*a[n-1];</div><div class="line">        for(int i =0; i&lt;n;i++)</div><div class="line">            num[a[i] * 2]--;</div><div class="line">        for(int i = 0; i &lt;=len;i++) num[i]/=2;</div><div class="line">        sum[0] = 0;</div><div class="line">        for(int i = 1; i&lt;=len;i++) sum[i] = sum[i-1] + num[i];</div><div class="line">        ll cnt = 0;</div><div class="line">        for(int i = 0; i&lt;n;i++)</div><div class="line">        &#123;</div><div class="line">            cnt += (sum[len]-sum[a[i]]);</div><div class="line">            cnt -= (ll)(n-1-i) * i;</div><div class="line">            cnt -= (n-1);</div><div class="line">            cnt -= (ll)(n-1-i) * (n-2-i)/2;</div><div class="line">        &#125;</div><div class="line">        ll all = (ll)n * (n-1) * (n-2)/6;</div><div class="line">        double ans = (double)cnt/all;</div><div class="line">        printf("%.7lf\n",ans);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=5829" target="_blank" rel="external">hdu5829</a><br>这是今年多校第八场的1009.<br>题意就叙述的很拗口。。我真的感觉有些出题人该好好润色一下英语表达了。。<br>题目给了一个n元素的数集S，考虑任意的非空子集S<em>0,考虑其前k大元素（如果子集本身元素数目小于k，就指的是其中全部元素）之和sum</em>{s0}。对每一个给定的k，对所有子集，求sum的总和,即<br>[\sum_{ {s<em>0} \subset S} sum</em>{s0}]</p>
+<p>懒得写了。。网上有题解。。<br>这个题用NTT做蛮好。更难的点是如何处理出卷积的形式。我自己琢磨了挺久的。。什么时候单独写个题解好了。。挺考验熟练度和功底<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></div><div class="line"><span class="comment">//#define maxn 1024</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> fp freopen(<span class="meta-string">"in.txt"</span>,<span class="meta-string">"r"</span>,stdin)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> fpo freopen(<span class="meta-string">"out9.txt"</span>,<span class="meta-string">"w"</span>,stdout)</span></div><div class="line"><span class="comment">//#define judge</span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">1e-10</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> pi = <span class="built_in">acos</span>(<span class="number">-1.0</span>);</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = (<span class="number">1e5</span>+<span class="number">20</span>);</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">0x3f3f3f3f</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> p = <span class="number">998244353</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> G = <span class="number">3</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> lg2 = <span class="built_in">log</span>(<span class="number">2.0</span>);</div><div class="line"><span class="keyword">const</span> LL MOD = <span class="number">1e9</span>+<span class="number">7</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 5050</span></div><div class="line"></div><div class="line">LL A[maxn&lt;&lt;<span class="number">2</span>],B[maxn&lt;&lt;<span class="number">2</span>];</div><div class="line"><span class="function">LL <span class="title">quick_mod</span><span class="params">(LL a, LL b, LL m)</span></span></div><div class="line">&#123;</div><div class="line">    LL ans = <span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(b)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(b&amp;<span class="number">1</span>) ans = ans * a % m;</div><div class="line">        a = a * a%m;</div><div class="line">        b &gt;&gt;= <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> ans;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">rader</span><span class="params">(LL y[], <span class="keyword">int</span> len)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>,j=len/<span class="number">2</span>; i &lt; len<span class="number">-1</span>; i++)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(i &lt; j) swap(y[i], y[j]);</div><div class="line">        <span class="keyword">int</span> k = len/<span class="number">2</span>;</div><div class="line">        <span class="keyword">while</span>(j &gt;= k)</div><div class="line">        &#123;</div><div class="line">            j-=k;</div><div class="line">            k/=<span class="number">2</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(j &lt; k)j+=k;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">NTT</span><span class="params">(LL y[], <span class="keyword">int</span> len , <span class="keyword">int</span> op)</span></span></div><div class="line">&#123;</div><div class="line">    rader(y,len);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> h = <span class="number">2</span>; h &lt;= len; h &lt;&lt;=<span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        LL wn = quick_mod(G,(p<span class="number">-1</span>)/h,p);</div><div class="line">        <span class="keyword">if</span>(op == <span class="number">-1</span>)</div><div class="line">        &#123;</div><div class="line">            wn = quick_mod(wn,p<span class="number">-2</span>,p);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// now wn is the rotation factor.</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;len; j+=h)</div><div class="line">        &#123;</div><div class="line">            LL w = <span class="number">1</span>;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k = j; k &lt; j + h/<span class="number">2</span>; k++)</div><div class="line">            &#123;</div><div class="line">                LL u = y[k];</div><div class="line">                LL t = (w * y[k + h/<span class="number">2</span>])%p;</div><div class="line">                y[k] = (u + t)%p;</div><div class="line">                y[k + h/<span class="number">2</span>] = (u - t + p)%p;</div><div class="line">                w = w * wn % p;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// for IDFT(or maybe we call it IFNT)</span></div><div class="line">    <span class="keyword">if</span>(op==<span class="number">-1</span>)</div><div class="line">    &#123;</div><div class="line">        LL inv = quick_mod(len , p<span class="number">-2</span>, p);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;len; i++)</div><div class="line">            y[i] = y[i] * inv % p;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> n,t,a[maxn],ans[maxn];</div><div class="line">LL fac[maxn],tfac[maxn],inv_fac[maxn],inv_tfac[maxn];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    fac[<span class="number">0</span>] = tfac[<span class="number">0</span>] = inv_fac[<span class="number">0</span>] = inv_tfac[<span class="number">0</span>] =<span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; maxn ; i++)</div><div class="line">    &#123;</div><div class="line">        fac[i] = fac[i<span class="number">-1</span>] * i % p;</div><div class="line">        tfac[i] = <span class="number">2</span> * tfac[i<span class="number">-1</span>] %p;</div><div class="line">        inv_fac[i] = quick_mod(fac[i], p - <span class="number">2</span>, p);</div><div class="line">        inv_tfac[i] = quick_mod(tfac[i], p - <span class="number">2</span>, p);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    init();</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;t);</div><div class="line">    <span class="keyword">while</span>(t--)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i]);</div><div class="line">        sort(a+<span class="number">1</span>, a+<span class="number">1</span>+n,greater&lt;<span class="keyword">int</span>&gt;());</div><div class="line"></div><div class="line">        <span class="keyword">int</span> len = <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(len &lt; ((n&lt;&lt;<span class="number">1</span>)+<span class="number">1</span>) ) len &lt;&lt;= <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len ; i++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(i &lt;= n)</div><div class="line">                A[i] = tfac[n-i] * inv_fac[i] % p;</div><div class="line">            <span class="keyword">else</span> A[i] = <span class="number">0</span>;</div><div class="line">            <span class="keyword">if</span>(i &lt;= n &amp;&amp; i &gt;= <span class="number">1</span>)</div><div class="line">                B[i] = a[i] * fac[i<span class="number">-1</span>] % p;</div><div class="line">            <span class="keyword">else</span> B[i] = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        reverse(B+<span class="number">1</span>,B+<span class="number">1</span>+n);</div><div class="line"></div><div class="line">        NTT(A,len,<span class="number">1</span>);</div><div class="line">        NTT(B,len,<span class="number">1</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;len;i++)</div><div class="line">        &#123;</div><div class="line">            A[i] = A[i] * B[i] % p;</div><div class="line">        &#125;</div><div class="line">        NTT(A, len ,<span class="number">-1</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i&lt;=n; i++)</div><div class="line">        &#123;</div><div class="line">            ans[i] =((inv_tfac[i] * inv_fac[i<span class="number">-1</span>])%p) * A[n-i+<span class="number">1</span>] %p;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;=n;i++)</div><div class="line">        &#123;</div><div class="line">            ans[i] = (ans[i] + ans[i<span class="number">-1</span>]) % p;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;=n;i++)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%d "</span>,ans[i]);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">puts</span>(<span class="string">""</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><a href="https://hihocoder.com/problemset/problem/1388" target="_blank" rel="external">hihocoder1388 : Periodic Signal</a><br>这题是今年北京网络赛的F题<br>经过处理可以知道，核心在于计算<br>[min<em>{k=0}^{n-1}\sum</em>{i=0}^{n-1}a<em>ib</em>{(i+k)mod \, n}]<br>处理一下发现，这是个循环卷积。同样是经过一些变换，得到可以用NTT计算的形式，这个。。以后单独写题解吧。。<br>目前我查到的做法其实挺多的。。<br>单纯用FFT做的话，会损失精度，但是只是个别低位处出错，算出的k值依然是正确的，所以耍个赖，用FFT算出最优解的k值，然后手动算一下就行<br>NTT，不会丢精度，一个难点是找足够大的质数p，这里找到的是p=5*2^{55}+1 ，我不知道他们怎么找到这个数的。。试出来的罢。<br>它的原根（之一）是3</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></div><div class="line"><span class="comment">//#define maxn 1024</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> fp freopen(<span class="meta-string">"in.txt"</span>,<span class="meta-string">"r"</span>,stdin)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> fpo freopen(<span class="meta-string">"out9.txt"</span>,<span class="meta-string">"w"</span>,stdout)</span></div><div class="line"><span class="comment">//#define judge</span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">1e-10</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> pi = <span class="built_in">acos</span>(<span class="number">-1.0</span>);</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">200020</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> INF = <span class="number">0x3f3f3f3f</span>;</div><div class="line"><span class="keyword">const</span> LL p = <span class="number">180143985094819841L</span>L;</div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> G = <span class="number">3</span>;</div><div class="line"><span class="keyword">const</span> <span class="keyword">double</span> lg2 = <span class="built_in">log</span>(<span class="number">2.0</span>);</div><div class="line"><span class="keyword">const</span> LL MOD = <span class="number">1e9</span>+<span class="number">7</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 5050</span></div><div class="line"></div><div class="line">LL wn[<span class="number">20</span>];</div><div class="line"><span class="function">LL <span class="title">mul</span><span class="params">(LL x,LL y)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (x*y-(LL)(x / (<span class="keyword">long</span> <span class="keyword">double</span>)p*y+<span class="number">1e-3</span>)* p +p)%p;</div><div class="line">&#125;</div><div class="line"><span class="function">LL <span class="title">quick_mod</span><span class="params">(LL a, LL b, LL m)</span></span></div><div class="line">&#123;</div><div class="line">    LL ans = <span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(b)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(b&amp;<span class="number">1</span>) ans = mul(ans , a );</div><div class="line">        a = mul(a , a);</div><div class="line">        b &gt;&gt;= <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> ans;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">getwn</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;=<span class="number">18</span>;i++)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> t = <span class="number">1</span>&lt;&lt;i;</div><div class="line">        wn[i] = quick_mod(G,(p<span class="number">-1</span>)/t,p);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">rader</span><span class="params">(LL y[], <span class="keyword">int</span> len)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>,j=len/<span class="number">2</span>; i &lt; len<span class="number">-1</span>; i++)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(i &lt; j) swap(y[i], y[j]);</div><div class="line">        <span class="keyword">int</span> k = len/<span class="number">2</span>;</div><div class="line">        <span class="keyword">while</span>(j &gt;= k)</div><div class="line">        &#123;</div><div class="line">            j-=k;</div><div class="line">            k/=<span class="number">2</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(j &lt; k)j+=k;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">NTT</span><span class="params">(LL y[], <span class="keyword">int</span> len , <span class="keyword">int</span> op)</span></span></div><div class="line">&#123;</div><div class="line">    rader(y,len);</div><div class="line">    <span class="keyword">int</span> id = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> h = <span class="number">2</span>; h &lt;= len; h &lt;&lt;=<span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        id++;</div><div class="line">        <span class="comment">// now wn is the rotation factor.</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;len; j+=h)</div><div class="line">        &#123;</div><div class="line">            LL w = <span class="number">1</span>;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k = j; k &lt; j + h/<span class="number">2</span>; k++)</div><div class="line">            &#123;</div><div class="line">                LL u = y[k];</div><div class="line">                LL t = mul(y[k + h/<span class="number">2</span>], w);</div><div class="line">                y[k] = (u + t)%p;</div><div class="line">                y[k + h/<span class="number">2</span>] = (u - t + p)%p;</div><div class="line">                w = mul(w , wn[id]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// for IDFT(or maybe we call it IFNT)</span></div><div class="line">    <span class="keyword">if</span>(op==<span class="number">-1</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len/<span class="number">2</span>; i++)</div><div class="line">            swap(y[i], y[len-i]);</div><div class="line">        LL inv = quick_mod(len , p<span class="number">-2</span>, p);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;len; i++)</div><div class="line">            y[i] = mul(y[i] , inv );</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">int</span> t,n;</div><div class="line">LL a[<span class="number">60060</span>],b[<span class="number">60060</span>];</div><div class="line">LL A[maxn],B[maxn],C[maxn],ans;</div><div class="line">LL sum = <span class="number">0</span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; maxn;i++)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(i&lt;<span class="number">60060</span>)</div><div class="line">            A[i]=B[i]=C[i]=a[i]=b[i]=<span class="number">0</span>;</div><div class="line">        <span class="keyword">else</span> A[i]=B[i]=C[i]=<span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    getwn();</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;t);</div><div class="line">    <span class="keyword">while</span>(t--)</div><div class="line">    &#123;</div><div class="line">        init();</div><div class="line">        sum = <span class="number">0</span>;</div><div class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;n);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">scanf</span>(<span class="string">"%lld"</span>,&amp;a[i]);</div><div class="line">            sum += a[i] * a[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">scanf</span>(<span class="string">"%lld"</span>,&amp;b[i]);</div><div class="line">            sum += b[i] * b[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> len = <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(len &lt; (n&lt;&lt;<span class="number">1</span>) ) len&lt;&lt;=<span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n ; i++)</div><div class="line">        &#123;</div><div class="line">            A[i] = a[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</div><div class="line">        &#123;</div><div class="line">            B[i] = b[n<span class="number">-1</span>-i];</div><div class="line">        &#125;</div><div class="line">        NTT(A,len,<span class="number">1</span>);</div><div class="line">        NTT(B,len,<span class="number">1</span>);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)</div><div class="line">        &#123;</div><div class="line">            C[i] = mul(A[i],B[i]);</div><div class="line">        &#125;</div><div class="line">        NTT(C,len,<span class="number">-1</span>);</div><div class="line">        ans = C[n<span class="number">-1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n<span class="number">-2</span>; i++)</div><div class="line">        &#123;</div><div class="line">            ans = max(ans, C[i]+C[i+n]);</div><div class="line">        &#125;</div><div class="line">        sum -= (<span class="number">2L</span>L*ans);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>,sum);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>就先写这么多吧。。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数学/" rel="tag">#数学</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/11/折腾一天Ubuntu以及vim以及hexo的经历/" rel="next" title="折腾一天Ubuntu以及vim以及hexo的经历">
+                <i class="fa fa-chevron-left"></i> 折腾一天Ubuntu以及vim以及hexo的经历
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Skyword" />
+          <p class="site-author-name" itemprop="name">Skyword</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Skyword</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+</body>
+</html>

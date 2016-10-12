@@ -1,0 +1,638 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="经验," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="这一天跟ubuntu以及相关的事情周旋了一天。。让我慢慢记一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="折腾一天Ubuntu以及vim以及hexo的经历">
+<meta property="og:url" content="http://yoursite.com/2016/09/11/折腾一天Ubuntu以及vim以及hexo的经历/index.html">
+<meta property="og:site_name" content="Skyword's Blog">
+<meta property="og:description" content="这一天跟ubuntu以及相关的事情周旋了一天。。让我慢慢记一下">
+<meta property="og:updated_time" content="2016-10-11T15:01:07.781Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="折腾一天Ubuntu以及vim以及hexo的经历">
+<meta name="twitter:description" content="这一天跟ubuntu以及相关的事情周旋了一天。。让我慢慢记一下">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/11/折腾一天Ubuntu以及vim以及hexo的经历/"/>
+
+
+  <title> 折腾一天Ubuntu以及vim以及hexo的经历 | Skyword's Blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Skyword's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                折腾一天Ubuntu以及vim以及hexo的经历
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-11T20:17:38+08:00" content="2016-09-11">
+              2016-09-11
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这一天跟ubuntu以及相关的事情周旋了一天。。让我慢慢记一下<br><a id="more"></a></p>
+<h3 id="0-30-安装ubuntu和一些配置"><a href="#0-30-安装ubuntu和一些配置" class="headerlink" title="0:30 安装ubuntu和一些配置"></a>0:30 安装ubuntu和一些配置</h3><p>用ultraiso做好了ubuntu14.04LTS 的启动盘，重启，装好了系统<br>然后，同我多次装Linux系统（Ubuntu，Ubuntu Kylin，Fedora，Mint等等 ）的经历一样，没有无线网卡驱动。。<br>所以我先解决上网的问题。。<br>我的U盘里存着mentohust，于是deb直接安装mentohust。这次安装很顺利<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mentohust</div></pre></td></tr></table></figure></p>
+<p>这个我前几次装Linux的时候失败过很多次。。这次很顺利。。我很感动。。<br>参数是：二次认证，标准认证。。<br>这样我就有网了<br>然后我干了这几件事。。<br>安装chrome<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb</div><div class="line">sudo dpkg -i google-chrome-stable_current_amd64.deb</div></pre></td></tr></table></figure></p>
+<p>这里出现了依赖关系问题，大概是处理时的某依赖出错。。<br>修复依赖关系：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get -f install</div></pre></td></tr></table></figure></p>
+<p>这大概是一个比较普遍性的依赖修复命令<br>使用这个命令之后我就可以装chrome了<br>然后装lantern翻墙，去<a href="https://github.com/getlantern/lantern" target="_blank" rel="external">github</a>下载lantern的ubuntu版deb包即可<br>然后登陆了Google账号，同步了我在windows下chrome的信息<br>这时候时间已经到了1:00</p>
+<h3 id="1-00-网卡驱动"><a href="#1-00-网卡驱动" class="headerlink" title="1:00 网卡驱动"></a>1:00 网卡驱动</h3><p>下面我打算装网卡驱动了，为啥我试过kylin，mint，Fedora24，Fedora22之后又回到了ubuntu呢，就是ubuntu的驱动好搞多了。。<br>我之前在Fedora下没有网卡驱动，（因为我用的是据说被承认业界毒瘤的broadcom 某型号 无线网卡）。。从官网下源码编译都没搞成。。</p>
+<p>回到ubuntu，这里是 设置-软件与更新-附加驱动<br>系统会扫描一下可用的驱动，其中有一项broadcom。。显然就是无线网卡了<br>同时我的系统也扫描了一个nvdia显卡驱动的更新，我顺手把这个也选上了<br>现在回想起来，这大概是葬送了过去一个多小时的工作。</p>
+<p>点击更新之后我就去睡了。。</p>
+<h3 id="8-00-ubuntu登录黑屏"><a href="#8-00-ubuntu登录黑屏" class="headerlink" title="8:00 ubuntu登录黑屏"></a>8:00 ubuntu登录黑屏</h3><p>好了我睡醒了<br>电脑在ubuntu下开了一晚上。现在说要重启来应用更改，那就重启好了<br>首先我要提及，昨晚我做的改动都有：</p>
+<ul>
+<li>安装chrome和lantern，以及mentohust</li>
+<li>安装了搜狗拼音</li>
+<li>sudo apt-get update</li>
+<li>从软件更新处更新了网卡和显卡驱动</li>
+</ul>
+<p>重启之后，进入grub引导，然后，wtf，黑屏了。。<br>不过仍有ubuntu标志性的开机音效，但是，黑屏了</p>
+<p>然后我用手机查了查为啥。。<br>首先改动grub，在grub处直接按e，进入grub的配置文件<br>在quiet splash后面加上了nomodeset<br>(在此之前，我还试过把quiet splash改为text splash，使用命令行启动再startx，不过并没有用。。)<br>加上nomodeset之后，f10，重新启动。</p>
+<p>这次启动，有图形界面了。。然而，登录界面出现了死循环。。<br>也就是说输入密码之后，闪一下，又回到了登陆界面。。<br>son of a bitch..</p>
+<p>再次借助网络来查原因。。这次说会有很多可能的原因。。由于我都试了试也没找到解决办法，所以我也不记在这里了</p>
+<p>最后我无语了，重装系统吧。。</p>
+<h3 id="10-00-重新开始一遍"><a href="#10-00-重新开始一遍" class="headerlink" title="10:00 重新开始一遍"></a>10:00 重新开始一遍</h3><p>重装了ubuntu，按照昨晚那个套路重新来了一遍<br>只不过这次不重装什么显卡驱动了<br>起码看着能用了</p>
+<h3 id="15-00-发现需要重装vim"><a href="#15-00-发现需要重装vim" class="headerlink" title="15:00 发现需要重装vim"></a>15:00 发现需要重装vim</h3><p>我来折腾vim<br>根据前几次的装Linux的经验，配置vimrc文件的时候基本都会出现剪贴板不能共享到系统剪贴板的现象<br>而在上次装Fedora22的时候我终于知道了比较深层的原因<br>vim安装好后，在终端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim --version</div></pre></td></tr></table></figure></p>
+<p>这里会显示vim的配置信息，+和-分别代表某功能是否被加入<br>如果你看到了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-clipboard</div></pre></td></tr></table></figure></p>
+<p>说明不管怎么配置，vim也无法同步到系统剪贴板。。<br>这种情况下，据我目前所知，只能重新编译vim了。。</p>
+<h3 id="15-30-vim源码编译安装"><a href="#15-30-vim源码编译安装" class="headerlink" title="15:30 vim源码编译安装"></a>15:30 vim源码编译安装</h3><p>重新安装vim<br>（其实这些东西网上都有。。但是我除了写题解也没啥别的东西是原创的了对吧。。）</p>
+<p>①安装一些vim需要的库及其他<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev ruby-dev mercurial</div></pre></td></tr></table></figure></p>
+<p>②移除已有的vim和相关组件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo apt-get remove vim  </div><div class="line">sudo apt-get remove vim-runtime  </div><div class="line">sudo apt-get remove gvim  </div><div class="line">sudo apt-get remove vim-tiny  </div><div class="line">sudo apt-get remove vim-common  </div><div class="line">sudo apt-get remove vim-gui-common</div></pre></td></tr></table></figure></p>
+<p>③下载编译源码<br>首先下载源代码包<br>ftp://mirrors-usa.go-parts.com/pub/vim/unix/vim-7.4.tar.bz2<br>下载到本地根目录<br>解压缩：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -xjvf vim-7.4.tar.bz2</div></pre></td></tr></table></figure></p>
+<p>解压缩之后会生成一个vim74目录，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd vim74</div></pre></td></tr></table></figure></p>
+<p>进入此目录后进行编译，在终端输入如下编译选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure  --with-features=huge --enable-rubyinterp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config-i386-linux-gnu/--enable-perlinterp --enable-gui=gtk2 --enable-cscope --enable-luainterp --enable-perlinterp --enable-multibyte --prefix=/usr</div></pre></td></tr></table></figure></p>
+<p>这里为了解决vim剪贴板的问题，着重强调–with-features=huge<br>这个选项是保留最大的编译选项，即能开启的特性都要开启，自然包括clipboard</p>
+<p>然后就开始编译了，如果写错了编译选项可以用make clean命令清除编译痕迹后重新来编译<br>而后安装即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo make VIMRUNTIMEDIR=/usr/share/vim/vim74</div><div class="line">sudo make install</div></pre></td></tr></table></figure></p>
+<p>这个过程我也走得比较顺利<br>运行vim，一切正常<br>vim –version，发现有+clipboard，一切正常了<br>我配置了vimrc文件，里面用映射定义了<c-a>为指令ggvG”+<br>这样就可以同步系统剪贴板和vim剪贴板了</c-a></p>
+<p>具体的vim配置文件写法网上一大把。。这里就不细说了，我用的是<a href="http://www.cnblogs.com/ma6174/archive/2011/12/10/2283393.html" target="_blank" rel="external">ma6174</a>的，当然根据自己需要也改了改</p>
+<p>好了，vim就折腾到这里了</p>
+<p>下面是hexo</p>
+<h3 id="17-00-失败的hexo配置"><a href="#17-00-失败的hexo配置" class="headerlink" title="17:00 失败的hexo配置"></a>17:00 失败的hexo配置</h3><p>这篇博客写到这会我已经比较心烦了。。<br>背景：我已经在windows下用过一阵子hexo，不过没有写过几篇文章。。而且较早的几篇丢了。。更早的几十篇在csdn放着。。</p>
+<p>所以我要在ubuntu部署hexo<br>按照网上的步骤部署git,nodejs，然后部署hexo。不过我试了试，只有在root下才能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo init</div></pre></td></tr></table></figure></p>
+<p>这时的hexo文件在root下，图形化界面不能直接打开。。在命令行中先su进入root<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nautilus hexo</div></pre></td></tr></table></figure></p>
+<p>这样就进入了图形化界面下的hexo目录，我把之前写过的文章和用过的主题都拷了进去</p>
+<p>而我发现一旦退出终端重新登录。。这些更改全都失效了。。<br>我感觉是权限的问题，然而我是在root下做这些的。。这就困惑了</p>
+<p>从此开始了一些失败的尝试。。<br>我打算更改账户的优先级，我的账户名叫sun，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gedit /etc/passwd</div></pre></td></tr></table></figure></p>
+<p>打开了账户配置的文件，在我现在用的账户下，有一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sun:x:1000:1000:crystal:/home/linuxidc:/bin/bash</div></pre></td></tr></table></figure></p>
+<p>这里sun是用户名，根据网上的介绍，把两个1000改成0即可<br>我改完之后，注销，再次登录，son of a bitch … 我的账户没了。。</p>
+<p>我一定改错了什么，可是我改错了什么了呢。。我了个大去<br>关键是我现在也改不回来了。。登录不进去<br>没办法，只能进入命令行模式了<br>重启，在登录界面Ctrl+Alt+F1，进入命令行，登录原来的账户，可以看到，我的账户还是正常存在的。<br>在命令行模式下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/passwd</div></pre></td></tr></table></figure></p>
+<p>就打开了passwd文件，我把之前改掉的两个0，改回了1000<br>然后sudo reboot重启<br>然后我惊喜地看到，我的账户回来了，输入密码登录<br>woc，登录账户又回到了登录界面，即进入了登录界面的死循环。。<br>这踏马又是因为什么。。</p>
+<p>查了查这个原因也是有很多种的，我的原因是Xauthority文件问题<br>再次Ctrl+Alt+F1进入命令行<br>sun是我的用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd ~</div><div class="line">sudo chown sun:sun .Xauthority</div></pre></td></tr></table></figure></p>
+<p>如果执行成功会显示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-rw------ 1 sun sun ****  .Xauthority</div></pre></td></tr></table></figure></p>
+<p>其中的<em>**</em>是一个时间信息。<br>然后我重启，这次成功进入了，登录了图形桌面<br>已经是晚上19:00了<br>折腾完这些之后我暂时不打算在ubuntu部署hexo了，反正我经常懒得写，大不了就在windows下写hexo吧。。啥时候又想折腾了再配置ubuntu下的hexo吧</p>
+<p>一个白天就这么过去了。。这篇文章是我回到了windows下在cmdmarkdown回忆下写的，我现在感觉我丢失了一些细节。。但是大体上就是这些吧</p>
+<p>估计也不会有谁看到这文章，如果有人看到了，不要嫌弃我写的太粗糙orz</p>
+<p>就先写这些吧</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/经验/" rel="tag">#经验</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/05/HDU-5407-CRB-and-Candies-组合数-逆元/" rel="next" title="HDU 5407 CRB and Candies 组合数+逆元">
+                <i class="fa fa-chevron-left"></i> HDU 5407 CRB and Candies 组合数+逆元
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/11/多项式计算-FFT与NTT学习小结/" rel="prev" title="多项式计算-FFT与NTT学习小结">
+                多项式计算-FFT与NTT学习小结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Skyword" />
+          <p class="site-author-name" itemprop="name">Skyword</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-30-安装ubuntu和一些配置"><span class="nav-number">1.</span> <span class="nav-text">0:30 安装ubuntu和一些配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-00-网卡驱动"><span class="nav-number">2.</span> <span class="nav-text">1:00 网卡驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-00-ubuntu登录黑屏"><span class="nav-number">3.</span> <span class="nav-text">8:00 ubuntu登录黑屏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-00-重新开始一遍"><span class="nav-number">4.</span> <span class="nav-text">10:00 重新开始一遍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-00-发现需要重装vim"><span class="nav-number">5.</span> <span class="nav-text">15:00 发现需要重装vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-30-vim源码编译安装"><span class="nav-number">6.</span> <span class="nav-text">15:30 vim源码编译安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-00-失败的hexo配置"><span class="nav-number">7.</span> <span class="nav-text">17:00 失败的hexo配置</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Skyword</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+</body>
+</html>
